@@ -25,6 +25,31 @@ exports.users = async (req, res) => {
 	}
 };
 
+exports.teachers = async (req, res) => {
+	const { page } = req.query;
+	const usersPerPage = 10;
+
+	try {
+		let pageNum = 0;
+
+		if (page <= 1) {
+			pageNum = 0;
+		} else {
+			pageNum = page - 1;
+		}
+		const result = await User.find({role: 'teacher'})
+			.sort({ createdAt: -1 })
+			.skip(pageNum * usersPerPage)
+			.limit(usersPerPage);
+
+		res.status(200).json({ success: true, message: 'users', data: result });
+	} catch (error) {
+		return res
+			.status(400)
+			.json({ success: false, message: 'Error while getting the users' });
+	}
+};
+
 exports.addFollowing = async (req, res, next) => {
 	const { userId } = req.user;
 	const { followId } = req.params;
