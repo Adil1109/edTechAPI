@@ -169,8 +169,7 @@ exports.sendVerificationCode = async (req, res) => {
 };
 
 exports.verifyVerificationCode = async (req, res) => {
-	const { userId, verified } = req.user;
-	const { providedCode } = req.body;
+	const {email, providedCode } = req.body;
 
 	try {
 		const { error, value } = acceptCodeScheema.validate({
@@ -185,11 +184,7 @@ exports.verifyVerificationCode = async (req, res) => {
 
 		const codeValue = providedCode.toString();
 
-		if (verified) {
-			return res
-				.status(400)
-				.json({ message: 'You are a verified user already!' });
-		}
+		
 
 		const existingUser = await User.findOne({ _id: userId }).select(
 			'+verificationCode +verificationCodeValidation'
@@ -199,6 +194,12 @@ exports.verifyVerificationCode = async (req, res) => {
 			return res.status(404).json({
 				message: 'Invalid credentials!',
 			});
+		}
+
+		if (existingUser.verified) {
+			return res
+				.status(400)
+				.json({ message: 'You are a verified user already!' });
 		}
 
 		if (
