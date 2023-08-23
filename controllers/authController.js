@@ -114,21 +114,23 @@ exports.signout = (req, res) => {
 };
 
 exports.sendVerificationCode = async (req, res) => {
-	const { userId, verified } = req.user;
+	const { email } = req.body;
 
 	try {
-		if (verified) {
-			return res
-				.status(400)
-				.json({ message: 'You are a verified user already!' });
-		}
+		
 
-		const existingUser = await User.findOne({ _id: userId });
+		const existingUser = await User.findOne({ email });
 
 		if (!existingUser) {
 			return res.status(404).json({
 				message: 'Create an account first. Then ask for Verification Code!',
 			});
+		}
+
+		if (existingUser.verified) {
+			return res
+				.status(400)
+				.json({ message: 'You are a verified user already!' });
 		}
 
 		const codeValue = Math.floor(Math.random() * 1000000).toString();
