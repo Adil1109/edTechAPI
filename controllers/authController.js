@@ -186,7 +186,7 @@ exports.verifyVerificationCode = async (req, res) => {
 
 		
 
-		const existingUser = await User.findOne({ _id: userId }).select(
+		const existingUser = await User.findOne({ email }).select(
 			'+verificationCode +verificationCodeValidation'
 		);
 
