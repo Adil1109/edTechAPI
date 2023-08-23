@@ -67,7 +67,7 @@ const userSchema = mongoose.Schema(
 			type: String,
 			trim: true,
 			enum: {
-				values: ['general-user', 'moderator', 'admin', 'super-admin'],
+				values: ['general-user', 'moderator', 'admin', 'teacher','super-admin'],
 				message: '{VALUE} is not supported',
 			},
 			default: 'general-user',
