@@ -9,6 +9,7 @@ const {
 } = require('../middlewares/identification');
 
 router.get('/get-users', identifier, usersController.users);
+router.get('/get-teachers', identifier, usersController.teachers);
 router.patch(
 	'/follow/:followId',
 	identifier,
