@@ -85,6 +85,7 @@ exports.signin = async (req, res) => {
 				userId: existingUser._id,
 				email: existingUser.email,
 				verified: existingUser.verified,
+				role: existingUser.role
 			},
 			process.env.TOKEN_SECRET
 		);
