@@ -10,6 +10,8 @@ const {
 	acceptFPCodeScheema,
 } = require('../middlewares/validator');
 
+
+
 exports.signup = async (req, res) => {
 	const { firstName, lastName, birthday, gender, email, password } = req.body;
 
