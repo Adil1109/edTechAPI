@@ -13,7 +13,7 @@ exports.users = async (req, res) => {
 			pageNum = page - 1;
 		}
 		const result = await User.find()
-			.sort({ createdAt: -1 })
+			.sort({ points: -1 })
 			.skip(pageNum * usersPerPage)
 			.limit(usersPerPage);
 
